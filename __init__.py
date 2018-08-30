@@ -1,2 +1,2 @@
-from .src.wrappers improt tta_segmentator
-from .src.wrappers improt tta_classifier
+from .src.wrappers import tta_segmentator
+from .src.wrappers import tta_classifier
