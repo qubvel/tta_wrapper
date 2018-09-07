@@ -1,11 +1,13 @@
+import sys
 import numpy as np
 
 from keras.models import Model
 from keras.layers import Input
 from keras.layers import Lambda
 
-from ..tta_wrapper import tta_classification
-from ..tta_wrapper import tta_segmentation
+sys.path.append('..')
+from tta_wrapper import tta_classification
+from tta_wrapper import tta_segmentation
 
 
 def identity_model(input_shape):
