@@ -39,7 +39,7 @@ Wrapper add augmentation layers to your Keras model like this:
 from keras.models import load_model
 from tta_wrapper import tta_segmentation
 
-model = load_model('path/to/model.h5)
+model = load_model('path/to/model.h5')
 tta_model = tta_segmentation(model, h_flip=True, rotation_angles=(90, 270), 
                              h_shifts=(-5, 5), merge='mean')
 y = tta_model.predict(x)
