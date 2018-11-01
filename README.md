@@ -1,3 +1,4 @@
+[![PyPI version](https://badge.fury.io/py/tta-wrapper.svg)](https://badge.fury.io/py/tta-wrapper)
 # TTA wrapper
 Test time augmnentation wrapper for keras image segmentation and classification models.
 
@@ -37,11 +38,11 @@ Wrapper add augmentation layers to your Keras model like this:
   3) image `height == width` if `rotation_angles` augmentation is used
 
 ### Installation
-1) Pip package:
+1) **PyPI package**:
 ```bash
-$ pip install tta_wrapper
+$ pip install tta-wrapper
 ```
-2) Latest version:
+2) **Latest version**:
 ```bash
 $ pip install git+https://github.com/qubvel/tta_wrapper/
 ```
