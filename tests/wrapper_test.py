@@ -23,13 +23,13 @@ def test_wrapper(wrapper, base_model, inputs, outputs):
     params = dict(
         h_flip=True,
         v_flip=True,
-        h_shifts=(10, -10),
-        v_shifts=(10, -10),
-        rotation_angles=(90, 180, 270),
+        h_shift=(10, -10),
+        v_shift=(10, -10),
+        rotation=(90, 180, 270),
         merge='mean'
     )
 
-    print('[TEST] parmeters: ', params)
+    print('[TEST] parameters: ', params)
 
     model = wrapper(base_model, **params)
     prediction = model.predict(inputs)

@@ -1,25 +1,125 @@
 import tensorflow as tf
 
 
-def h_flip(x, apply):
-    return tf.image.flip_left_right(x) if apply else x
+class DualTransform:
+
+    identity_param = None
+
+    def prepare(self, params):
+        if isinstance(params, tuple):
+            params = list(params)
+        elif params is None:
+            params = []
+        elif not isinstance(params, list):
+            params = [params]
+
+        if not self.identity_param in params:
+            params.append(self.identity_param)
+        return params
+
+    def forward(self, image, param):
+        raise NotImplementedError
+
+    def backward(self, image, param):
+        raise NotImplementedError
 
 
-def v_flip(x, apply):
-    return tf.image.flip_up_down(x) if apply else x
+class SingleTransform(DualTransform):
+
+    def backward(self, image, param):
+        return image
 
 
-def rotate(x, angle):
-    k = angle // 90 if angle >= 0 else (angle + 360) // 90
-    return tf.image.rot90(x, k)
+class HFlip(DualTransform):
+
+    identity_param = 0
+
+    def prepare(self, params):
+        if params == False:
+            return [0]
+        if params == True:
+            return [1, 0]
+
+    def forward(self, image, param):
+        return tf.image.flip_left_right(image) if param else image
+
+    def backward(self, image, param):
+        return self.forward(image, param)
 
 
-def h_shift(x, distance):
-    return tf.manip.roll(x, distance, axis=0)
+class VFlip(DualTransform):
+
+    identity_param = 0
+
+    def prepare(self, params):
+        if params == False:
+            return [0]
+        if params == True:
+            return [1, 0]
+
+    def forward(self, image, param):
+        return tf.image.flip_up_down(image) if param else image
+
+    def backward(self, image, param):
+        return self.forward(image, param)
 
 
-def v_shift(x, distance):
-    return tf.manip.roll(x, distance, axis=1)
+class Rotate(DualTransform):
+
+    identity_param = 0
+
+    def forward(self, image, angle):
+        k = angle // 90 if angle >= 0 else (angle + 360) // 90
+        return tf.image.rot90(image, k)
+
+    def backward(self, image, angle):
+        return self.forward(image, -angle)
+
+
+class HShift(DualTransform):
+
+    identity_param = 0
+
+    def forward(self, image, param):
+        return tf.manip.roll(image, param, axis=0)
+
+    def backward(self, image, param):
+        return tf.manip.roll(image, -param, axis=0)
+
+
+class VShift(DualTransform):
+
+    identity_param = 0
+
+    def forward(self, image, param):
+        return tf.manip.roll(image, param, axis=1)
+
+    def backward(self, image, param):
+        return tf.manip.roll(image, -param, axis=1)
+
+
+class Contrast(SingleTransform):
+
+    identity_param = 1
+
+    def forward(self, image, param):
+        return tf.image.adjust_contrast(image, param)
+
+
+class Add(SingleTransform):
+
+    identity_param = 0
+
+    def forward(self, image, param):
+        return image + param
+
+
+class Multiply(SingleTransform):
+
+    identity_param = 1
+
+    def forward(self, image, param):
+        return image * param
 
 
 def gmean(x):

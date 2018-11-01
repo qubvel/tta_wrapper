@@ -30,9 +30,12 @@ doc = """
 def tta_segmentation(model,
                      h_flip=False,
                      v_flip=False,
-                     h_shifts=None,
-                     v_shifts=None,
-                     rotation_angles=None,
+                     h_shift=None,
+                     v_shift=None,
+                     rotation=None,
+                     contrast=None,
+                     add=None,
+                     mul=None,
                      merge='mean'):
 
     """
@@ -40,9 +43,13 @@ def tta_segmentation(model,
     """
     tta = Augmentation(h_flip=h_flip,
                        v_flip=v_flip,
-                       h_shifts=h_shifts,
-                       v_shifts=v_shifts,
-                       rotation_angles=rotation_angles)
+                       h_shift=h_shift,
+                       v_shift=v_shift,
+                       rotation=rotation,
+                       contrast=contrast,
+                       add=add,
+                       mul=mul,
+                       )
 
     input_shape = (1, *model.input.shape.as_list()[1:])
 
@@ -60,9 +67,12 @@ def tta_segmentation(model,
 def tta_classification(model,
                        h_flip=False,
                        v_flip=False,
-                       h_shifts=None,
-                       v_shifts=None,
-                       rotation_angles=None,
+                       h_shift=None,
+                       v_shift=None,
+                       rotation=None,
+                       contrast=None,
+                       add=None,
+                       mul=None,
                        merge='mean'):
     """
     Classification model test time augmentation wrapper.
@@ -70,9 +80,13 @@ def tta_classification(model,
 
     tta = Augmentation(h_flip=h_flip,
                        v_flip=v_flip,
-                       h_shifts=h_shifts,
-                       v_shifts=v_shifts,
-                       rotation_angles=rotation_angles)
+                       h_shift=h_shift,
+                       v_shift=v_shift,
+                       rotation=rotation,
+                       contrast=contrast,
+                       add=add,
+                       mul=mul,
+                       )
 
     input_shape = (1, *model.input.shape.as_list()[1:])
 

@@ -1,6 +1,7 @@
 import tensorflow as tf
 from keras.layers import Layer
-from ..tta_wrapper import functional as F
+
+from . import functional as F
 
 
 class Repeat(Layer):
