@@ -36,6 +36,15 @@ Wrapper add augmentation layers to your Keras model like this:
   2) inference `batch_size == 1`
   3) image `height == width` if `rotation_angles` augmentation is used
 
+### Installation
+1) Pip package:
+```bash
+$ pip install tta_wrapper
+```
+2) Latest version:
+```bash
+$ pip install git+https://github.com/qubvel/tta_wrapper/
+```
 
 ## Example
 ```python
