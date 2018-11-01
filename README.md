@@ -23,9 +23,12 @@ Wrapper add augmentation layers to your Keras model like this:
 
   - `h_flip` - bool, horizontal flip augmentation
   - `v_flip` - bool, vertical flip augmentation
-  - `rotation_angles` - list, allowable angles - 90, 180, 270
-  - `h_shifts` - list of int, horizontal shift augmentation in pixels
-  - `v_shifts` - list of int, vertical shift augmentation in pixels
+  - `rotataion` - list, allowable angles - 90, 180, 270
+  - `h_shift` - list of int, horizontal shift augmentation in pixels
+  - `v_shift` - list of int, vertical shift augmentation in pixels
+  - `add` - list of int/float, additive factor (aug_image = image + factor)
+  - `mul` - list of int/float, additive factor (aug_image = image * factor)
+  - `contrast` - list of int/float, contrast adjustment factor (aug_image = (image - mean) * factor + mean)
   - `merge` - one of 'mean', 'gmean' and 'max' - mode of merging augmented predictions together
   
 ### Constraints
