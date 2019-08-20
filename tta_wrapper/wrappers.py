@@ -39,7 +39,9 @@ def tta_segmentation(model,
                      contrast=None,
                      add=None,
                      mul=None,
-                     merge='mean'):
+                     merge='mean',
+                     input_shape=None,
+                    ):
 
     """
     Segmentation model test time augmentation wrapper.
@@ -54,9 +56,17 @@ def tta_segmentation(model,
                        mul=mul,
                        )
 
-    input_shape = (1, *model.input.shape.as_list()[1:])
+    if input_shape is None:
+        try:
+            input_shape = model.input_shape[1:]
+        except AttributeError:
+            raise AttributeError(
+                'Can not determine input shape automatically, please provide `input_shape` '
+                'argument to wrapper (e.g input_shape=(None, None, 3)).'
+            )
+    batch_shape = (1, *input_shape) # add batch dimension
 
-    inp = Input(batch_shape=input_shape)
+    inp = Input(batch_shape=batch_shape)
     x = Repeat(tta.n_transforms)(inp)
     x = TTA(*tta.forward)(x)
     x = model(x)
@@ -76,7 +86,9 @@ def tta_classification(model,
                        contrast=None,
                        add=None,
                        mul=None,
-                       merge='mean'):
+                       merge='mean'
+                       input_shape=None,
+                      ):
     """
     Classification model test time augmentation wrapper.
     """
@@ -90,10 +102,18 @@ def tta_classification(model,
                        add=add,
                        mul=mul,
                        )
+    
+    if input_shape is None:
+        try:
+            input_shape = model.input_shape[1:]
+        except AttributeError:
+            raise AttributeError(
+                'Can not determine input shape automatically, please provide `input_shape` '
+                'argument to wrapper (e.g input_shape=(None, None, 3)).'
+            )
+    batch_shape = (1, *input_shape) # add batch dimension
 
-    input_shape = (1, *model.input.shape.as_list()[1:])
-
-    inp = Input(batch_shape=input_shape)
+    inp = Input(batch_shape=batch_shape)
     x = Repeat(tta.n_transforms)(inp)
     x = TTA(*tta.forward)(x)
     x = model(x)
