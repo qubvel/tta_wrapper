@@ -17,8 +17,11 @@ doc = """
         v_flip: (bool) vertical flip
         h_shifts: (list of int) list of horizontal shifts (e.g. [10, -10])
         v_shifts: (list of int) list of vertical shifts (e.g. [10, -10])
-        rotation_angles: (list of int) list of angles (deg) for rotation in range [0, 360),
+        rotation: (list of int) list of angles (deg) for rotation in range [0, 360),
             should be divisible by 90 deg (e.g. [90, 180, 270])
+        contrast: (list of float) values for contrast adjustment
+        add: (list of int or float) values to add on image (e.g. [-10, 10])
+        mul: (list of float) values to multiply image on (e.g. [0.9, 1.1])
         merge: one of 'mean', 'gmean' and 'max' - mode of merging augmented
             predictions together.
 
