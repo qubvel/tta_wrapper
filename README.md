@@ -35,7 +35,7 @@ Wrapper add augmentation layers to your Keras model like this:
 ### Constraints
   1) model has to have 1 `input` and 1 `output`
   2) inference `batch_size == 1`
-  3) image `height == width` if `rotation_angles` augmentation is used
+  3) image `height == width` if `rotation` augmentation is used
 
 ### Installation
 1) **PyPI package**:
@@ -53,7 +53,7 @@ from keras.models import load_model
 from tta_wrapper import tta_segmentation
 
 model = load_model('path/to/model.h5')
-tta_model = tta_segmentation(model, h_flip=True, rotation_angles=(90, 270), 
-                             h_shifts=(-5, 5), merge='mean')
+tta_model = tta_segmentation(model, h_flip=True, rotation=(90, 270), 
+                             h_shift=(-5, 5), merge='mean')
 y = tta_model.predict(x)
 ```
