@@ -86,7 +86,7 @@ def tta_classification(model,
                        contrast=None,
                        add=None,
                        mul=None,
-                       merge='mean'
+                       merge='mean',
                        input_shape=None,
                       ):
     """
