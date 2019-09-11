@@ -30,31 +30,32 @@ doc = """
 
 """
 
-def tta_segmentation(model,
-                     h_flip=False,
-                     v_flip=False,
-                     h_shift=None,
-                     v_shift=None,
-                     rotation=None,
-                     contrast=None,
-                     add=None,
-                     mul=None,
-                     merge='mean',
-                     input_shape=None,
-                    ):
-
+def segmentation(
+    model,
+    h_flip=False,
+    v_flip=False,  
+    h_shift=None,
+    v_shift=None,
+    rotation=None,
+    contrast=None,
+    add=None,
+    mul=None,
+    merge='mean',
+    input_shape=None,
+):
     """
     Segmentation model test time augmentation wrapper.
     """
-    tta = Augmentation(h_flip=h_flip,
-                       v_flip=v_flip,
-                       h_shift=h_shift,
-                       v_shift=v_shift,
-                       rotation=rotation,
-                       contrast=contrast,
-                       add=add,
-                       mul=mul,
-                       )
+    tta = Augmentation(
+        h_flip=h_flip,
+        v_flip=v_flip,
+        h_shift=h_shift,
+        v_shift=v_shift,
+        rotation=rotation,
+        contrast=contrast,
+        add=add,
+        mul=mul,
+    )
 
     if input_shape is None:
         try:
@@ -77,31 +78,33 @@ def tta_segmentation(model,
     return tta_model
 
 
-def tta_classification(model,
-                       h_flip=False,
-                       v_flip=False,
-                       h_shift=None,
-                       v_shift=None,
-                       rotation=None,
-                       contrast=None,
-                       add=None,
-                       mul=None,
-                       merge='mean',
-                       input_shape=None,
-                      ):
+def classification(
+    model,
+    h_flip=False,
+    v_flip=False,
+    h_shift=None,
+    v_shift=None,
+    rotation=None,
+    contrast=None,
+    add=None,
+    mul=None,
+    merge='mean',
+    input_shape=None,
+):
     """
     Classification model test time augmentation wrapper.
     """
 
-    tta = Augmentation(h_flip=h_flip,
-                       v_flip=v_flip,
-                       h_shift=h_shift,
-                       v_shift=v_shift,
-                       rotation=rotation,
-                       contrast=contrast,
-                       add=add,
-                       mul=mul,
-                       )
+    tta = Augmentation(
+        h_flip=h_flip,
+        v_flip=v_flip,
+        h_shift=h_shift,
+        v_shift=v_shift,
+        rotation=rotation,
+        contrast=contrast,
+        add=add,
+        mul=mul,
+    )
     
     if input_shape is None:
         try:
@@ -123,5 +126,9 @@ def tta_classification(model,
     return tta_model
 
 
-tta_classification.__doc__ += doc
-tta_segmentation.__doc__ += doc
+classification.__doc__ += doc
+segmentation.__doc__ += doc
+
+# legacy support
+tta_classification = classification
+tta_segmentation = segmentation
