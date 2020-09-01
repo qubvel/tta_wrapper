@@ -1,4 +1,5 @@
 import tensorflow as tf
+from tensorflow.python.ops import manip_ops
 
 
 class DualTransform:
@@ -81,10 +82,10 @@ class HShift(DualTransform):
     identity_param = 0
 
     def forward(self, image, param):
-        return tf.manip.roll(image, param, axis=0)
+        return manip_ops.roll(image, param, axis=0)
 
     def backward(self, image, param):
-        return tf.manip.roll(image, -param, axis=0)
+        return manip_ops.roll(image, -param, axis=0)
 
 
 class VShift(DualTransform):
@@ -92,10 +93,10 @@ class VShift(DualTransform):
     identity_param = 0
 
     def forward(self, image, param):
-        return tf.manip.roll(image, param, axis=1)
+        return manip_ops.roll(image, param, axis=1)
 
     def backward(self, image, param):
-        return tf.manip.roll(image, -param, axis=1)
+        return manip_ops.roll(image, -param, axis=1)
 
 
 class Contrast(SingleTransform):

@@ -1,9 +1,9 @@
 import sys
 import numpy as np
 
-from keras.models import Model
-from keras.layers import Input
-from keras.layers import Lambda
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input
+from tensorflow.keras.layers import Lambda
 
 sys.path.append('..')
 from tta_wrapper import tta_classification
