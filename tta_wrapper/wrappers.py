@@ -1,5 +1,5 @@
-from keras.models import Model
-from keras.layers import Input
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input
 
 from .layers import Repeat, TTA, Merge
 from .augmentation import Augmentation
