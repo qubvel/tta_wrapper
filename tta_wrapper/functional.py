@@ -81,10 +81,10 @@ class HShift(DualTransform):
     identity_param = 0
 
     def forward(self, image, param):
-        return tf.manip.roll(image, param, axis=0)
+        return tf.roll(image, param, axis=0)
 
     def backward(self, image, param):
-        return tf.manip.roll(image, -param, axis=0)
+        return tf.roll(image, -param, axis=0)
 
 
 class VShift(DualTransform):
@@ -92,10 +92,10 @@ class VShift(DualTransform):
     identity_param = 0
 
     def forward(self, image, param):
-        return tf.manip.roll(image, param, axis=1)
+        return tf.roll(image, param, axis=1)
 
     def backward(self, image, param):
-        return tf.manip.roll(image, -param, axis=1)
+        return tf.roll(image, -param, axis=1)
 
 
 class Contrast(SingleTransform):
