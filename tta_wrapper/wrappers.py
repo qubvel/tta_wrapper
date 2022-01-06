@@ -1,5 +1,5 @@
-from keras.models import Model
-from keras.layers import Input
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input
 
 from .layers import Repeat, TTA, Merge
 from .augmentation import Augmentation
@@ -10,7 +10,6 @@ doc = """
         1) model has to have 1 input and 1 output
         2) inference batch_size = 1
         3) image height == width if rotate augmentation is used
-
     Args:
         model: instance of Keras model
         h_flip: (bool) horizontal flip
@@ -24,23 +23,22 @@ doc = """
         mul: (list of float) values to multiply image on (e.g. [0.9, 1.1])
         merge: one of 'mean', 'gmean' and 'max' - mode of merging augmented
             predictions together.
-
     Returns:
         Keras Model instance
-
 """
+
 
 def segmentation(
     model,
     h_flip=False,
-    v_flip=False,  
+    v_flip=False,
     h_shift=None,
     v_shift=None,
     rotation=None,
     contrast=None,
     add=None,
     mul=None,
-    merge='mean',
+    merge=None,
     input_shape=None,
 ):
     """
@@ -65,7 +63,7 @@ def segmentation(
                 'Can not determine input shape automatically, please provide `input_shape` '
                 'argument to wrapper (e.g input_shape=(None, None, 3)).'
             )
-    batch_shape = (1, *input_shape) # add batch dimension
+    batch_shape = (1, *input_shape)  # add batch dimension
 
     inp = Input(batch_shape=batch_shape)
     x = Repeat(tta.n_transforms)(inp)
@@ -88,7 +86,7 @@ def classification(
     contrast=None,
     add=None,
     mul=None,
-    merge='mean',
+    merge=None,
     input_shape=None,
 ):
     """
@@ -105,7 +103,7 @@ def classification(
         add=add,
         mul=mul,
     )
-    
+
     if input_shape is None:
         try:
             input_shape = model.input_shape[1:]
@@ -114,7 +112,7 @@ def classification(
                 'Can not determine input shape automatically, please provide `input_shape` '
                 'argument to wrapper (e.g input_shape=(None, None, 3)).'
             )
-    batch_shape = (1, *input_shape) # add batch dimension
+    batch_shape = (1, *input_shape)  # add batch dimension
 
     inp = Input(batch_shape=batch_shape)
     x = Repeat(tta.n_transforms)(inp)
@@ -123,7 +121,7 @@ def classification(
     x = Merge(merge)(x)
     tta_model = Model(inp, x)
 
-    return tta_model
+    return tta_model, tta
 
 
 classification.__doc__ += doc

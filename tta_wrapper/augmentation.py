@@ -30,8 +30,8 @@ class Augmentation(object):
         self.forward_aug = [t.forward for t in transforms]
         self.forward_params = transform_params
 
-        self.backward_aug = [t.backward for t in transforms[::-1]] # reverse transforms
-        self.backward_params = [p[::-1] for p in transform_params] # reverse params
+        self.backward_aug = [t.backward for t in transforms[::-1]]  # reverse transforms
+        self.backward_params = [p[::-1] for p in transform_params]  # reverse params
 
         self.n_transforms = len(transform_params)
 
