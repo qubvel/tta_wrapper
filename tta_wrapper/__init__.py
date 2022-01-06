@@ -1,2 +1,2 @@
-from .wrappers import tta_segmentation
-from .wrappers import tta_classification
+from .wrappers import classification, segmentation
+

@@ -1,4 +1,6 @@
+import numpy as np
 import tensorflow as tf
+import tensorflow_addons as tfa
 
 
 class DualTransform:
@@ -13,7 +15,7 @@ class DualTransform:
         elif not isinstance(params, list):
             params = [params]
 
-        if not self.identity_param in params:
+        if self.identity_param not in params:
             params.append(self.identity_param)
         return params
 
@@ -35,10 +37,10 @@ class HFlip(DualTransform):
     identity_param = 0
 
     def prepare(self, params):
-        if params == False:
-            return [0]
-        if params == True:
+        if params:
             return [1, 0]
+        else:
+            return [0]
 
     def forward(self, image, param):
         return tf.image.flip_left_right(image) if param else image
@@ -52,10 +54,10 @@ class VFlip(DualTransform):
     identity_param = 0
 
     def prepare(self, params):
-        if params == False:
-            return [0]
-        if params == True:
+        if params:
             return [1, 0]
+        else:
+            return [0]
 
     def forward(self, image, param):
         return tf.image.flip_up_down(image) if param else image
@@ -69,8 +71,8 @@ class Rotate(DualTransform):
     identity_param = 0
 
     def forward(self, image, angle):
-        k = angle // 90 if angle >= 0 else (angle + 360) // 90
-        return tf.image.rot90(image, k)
+        # k = angle // 90 if angle >= 0 else (angle + 360) // 90
+        return tfa.image.rotate(image, np.pi * angle / 180)
 
     def backward(self, image, angle):
         return self.forward(image, -angle)

@@ -1,5 +1,7 @@
+# import numpy as np
 import tensorflow as tf
 from tensorflow.keras.layers import Layer
+# import tensorflow.keras.backend as K
 
 from . import functional as F
 
@@ -47,13 +49,40 @@ class Merge(Layer):
         super().__init__()
         self.type = type
 
+    def build(self, input_shape):
+        w_init = tf.ones_initializer()
+        if self.type is None:
+            self.theta = tf.Variable(
+                initial_value=w_init(input_shape),
+                dtype='float32',
+                trainable=False
+            )
+        elif self.type == 'ClassTTA':
+            self.theta = tf.Variable(
+                initial_value=w_init(input_shape),
+                dtype='float32',
+                trainable=True
+            )
+        elif self.type == 'AugTTA':
+            self.theta = tf.Variable(
+                initial_value=w_init((1, *input_shape[:-1])),
+                dtype='float32',
+                trainable=True
+            )
+
     def merge(self, x):
-        if self.type == 'mean':
+        if self.type is None:
+            return x
+        elif self.type == 'mean':
             return F.mean(x)
-        if self.type == 'gmean':
+        elif self.type == 'gmean':
             return F.gmean(x)
-        if self.type == 'max':
+        elif self.type == 'max':
             return F.max(x)
+        elif self.type == 'ClassTTA':
+            return F.mean(tf.multiply(self.theta, x))
+        elif self.type == 'AugTTA':
+            return tf.matmul(self.theta, x)
         else:
             raise ValueError(f'Wrong merge type {type}')
 
@@ -62,4 +91,3 @@ class Merge(Layer):
 
     def compute_output_shape(self, input_shape):
         return (1, *input_shape[1:])
-
